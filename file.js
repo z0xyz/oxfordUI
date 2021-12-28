@@ -22,34 +22,36 @@ function currentSegment(number) {
 
 function printTextualData(){
     let pageSegment = document.getElementsByClassName("def").item(current_number)
-    let finalWord = ""
+    let ultimateString = ""
 
     console.log(current_number)
     if (current_number == 0) {
         let wordType = document.getElementsByClassName("pos").item(0).textContent
-        finalWord += `(${wordType})\n`
+        ultimateString += `(${wordType})\n`
     }
+	// I guess i should figure out a way to evade these multiple try catch statement
     try {
         let wordDefinitioncategory = pageSegment.closest("li").parentElement.getElementsByClassName("shcut").item(0).textContent
-        finalWord += `${wordDefinitioncategory}\n`
+        ultimateString += `${wordDefinitioncategory}\n`
     }catch {
         console.log("missing element!")
     }
     try {
         let definitionTopic = document.getElementsByClassName("topic-g").item(0).textContent.slice(0,-2)
-        finalWord += `${definitionTopic}\n`
+        ultimateString += `${definitionTopic}\n`
     }catch {
         console.log("missing elemenent!")
     }
-    try {
-        let wordSynonym = document.getElementsByClassName("xrefs").item(0).textContent
-        finalWord += `${wordSynonym}\n`
-    }catch {
-        console.log("missing Element!")
-    }
 
     let wordDefinition = pageSegment.textContent
-    finalWord += `${wordDefinition} \n`
+    ultimateString += `${wordDefinition} \n`
+
+    try {
+        let wordThesaurus = document.getElementsByClassName('prefix').item(0).parentElement.textContent
+		ultimateString += `${wordThesaurus}\n`
+    }catch {
+        console.log("missing element!")
+    }
 
     try {
         let defintionExamplesCount = currentSegment(current_number).getElementsByClassName("x-gs").item(0).getElementsByClassName("x").length
@@ -57,10 +59,10 @@ function printTextualData(){
             try {
                 let wordExample = currentSegment(current_number).getElementsByClassName("x-gs").item(0).getElementsByClassName("x").item(x)
                 let wordAbstractUsage = wordExample.parentElement.getElementsByClassName("cf").item(0)
-                finalWord += `\t${wordAbstractUsage.textContent} \n\t\t${wordExample.textContent}\n`
+                ultimateString += `\t${wordAbstractUsage.textContent} \n\t\t${wordExample.textContent}\n`
             }catch {
                 let wordExample = currentSegment(current_number).getElementsByClassName("x-gs").item(0).getElementsByClassName("x").item(x)
-                finalWord += `\t${wordExample.textContent}\n`
+                ultimateString += `\t${wordExample.textContent}\n`
             }
         }
 
@@ -68,7 +70,7 @@ function printTextualData(){
         console.log("There aren't any definition examples!")
     }
 
-    navigator.clipboard.writeText(finalWord)
+    navigator.clipboard.writeText(ultimateString)
 }
 
 function abstractHighlighter(current_number,previous_number){

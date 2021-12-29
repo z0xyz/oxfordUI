@@ -8,6 +8,7 @@
 // @run-at       document-end
 // ==/UserScript==
 
+let emptyString = ''
 let current_number = -1
 let definitioneElement = document.getElementsByClassName("def")
 let definitionsLength = definitioneElement.length
@@ -48,7 +49,7 @@ function printTextualData(){
     ultimateString += `${wordDefinition} \n`
 
 	let wordThesaurus = document.getElementsByClassName("prefix").item(0).parentElement
-	wordThesaurus.previousElementSibling.className != 'def' ? console.log("missing element!") : ultimateString += `${wordThesaurus.textContent}\n`
+	ultimateString += (wordThesaurus.previousElementSibling.className == 'def') ? `${wordThesaurus.textContent}\n` : emptyString
 
     try {
         let defintionExamplesCount = currentSegment(current_number).getElementsByClassName("x-gs").item(0).getElementsByClassName("x").length

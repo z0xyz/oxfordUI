@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         oxford-dictionary
-// @version      0.1
+// @version      0.2
 // @description  Auto pronounce as soon as the forvo page loads .
 // @author       z0xyz
 // @match        https://www.oxfordlearnersdictionaries.com/*
@@ -47,12 +47,8 @@ function printTextualData(){
     let wordDefinition = pageSegment.textContent
     ultimateString += `${wordDefinition} \n`
 
-    try {
-        let wordThesaurus = document.getElementsByClassName("def").item(0).nextElementSibling.textContent
-		ultimateString += `${wordThesaurus}\n`
-    }catch {
-        console.log("missing element!")
-    }
+	let wordThesaurus = document.getElementsByClassName("prefix").item(0).parentElement
+	wordThesaurus.previousElementSibling.className != 'def' ? console.log("missing element!") : ultimateString += `${wordThesaurus.textContent}\n`
 
     try {
         let defintionExamplesCount = currentSegment(current_number).getElementsByClassName("x-gs").item(0).getElementsByClassName("x").length

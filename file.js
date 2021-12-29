@@ -9,19 +9,20 @@
 // ==/UserScript==
 
 let current_number = -1
-let definitionsLength = document.getElementsByClassName("def").length
+let definitioneElement = document.getElementsByClassName("def")
+let definitionsLength = definitioneElement.length
 
 function currentSegment(number) {
-    let returnValue = document.getElementsByClassName("def").item(number).closest("li")
+    let returnValue = definitioneElement.item(number).closest("li")
     if (returnValue == null) {
-        return (document.getElementsByClassName("def").item(number).parentElement.parentElement)
+        return (definitioneElement.item(number).parentElement.parentElement)
     }else {
         return (returnValue)
     }
 }
 
 function printTextualData(){
-    let pageSegment = document.getElementsByClassName("def").item(current_number)
+    let pageSegment = definitioneElement.item(current_number)
     let ultimateString = ""
 
     console.log(current_number)
@@ -47,7 +48,7 @@ function printTextualData(){
     ultimateString += `${wordDefinition} \n`
 
     try {
-        let wordThesaurus = document.getElementsByClassName('prefix').item(0).parentElement.textContent
+        let wordThesaurus = document.getElementsByClassName("def").item(0).nextElementSibling.textContent
 		ultimateString += `${wordThesaurus}\n`
     }catch {
         console.log("missing element!")
